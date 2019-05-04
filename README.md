@@ -1,0 +1,1 @@
+An Http server that serves my weather app. The server takes a pathname called 'uploadFile' and allows me upload a file. The sever also takes a pathname called 'home' and briefly talks about my application and Node Js session in Code Center. The sever also serves a login path with a login page.

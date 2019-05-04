@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WEATHER</title>
+	<style type="text/css">
+	 	body{ margin: 0; padding: 0; }
+		#head{ background-color: #6c5ce7; margin-top: -50px; }
+		#head h1{ text-align: center; font-size: 70px; padding: 50px; color: white; }
+		#text1{ text-align: center; color: #0984e3; font-size: 40px; font-family: serif; margin-top: -25px; }
+		#text2{ text-align: center; color: #2d3436;	font-size: 30px; font-family: serif;}
+		#name{ margin-left:510px; padding: 10px; border-radius: 5px; font-size: 20px; margin-top: -20px; }
+		#button{ margin-top: -20px; padding: 10px; padding-right: 25px; border-radius: 5px; 
+				 font-size: 20px; color: white; background-color: #0984e3; }
+		.details p { text-align: center; font-size: 20px; }
+		#weather{ display: inline-grid; }
+	</style>
+</head>
+<body>
+
+
+<div id="head"> 
+	<h1>Weather App</h1>
+	
+</div>
+<p id="text1">Enter City Name</p>
+<input id="name" type="text" name="cty" placeholder="City name">
+<button id="button" onclick="information()">Search</button>
+
+<h2 id="text2">Information</h2>
+
+<div class="details">
+	<p>Weather: <span id="weather"></span></p>
+	<p>Weather Description:<span id="desc"></span></p>
+	<p>Speed: <span id="speed"></span></p>
+	<p>Pressure:<span id="pressure"></span></p>
+	<p>Humidity:<span id="humidity"></span></p>
+	<p>Temperature:<span id="temperature"></span></p>
+<div>
+
+<script type="text/javascript">
+	let searchInput = document.getElementById('name')
+
+		searchInput.addEventListener("keyup", enter) 
+
+		//invoke function information on key event
+		function enter(event){
+			if(event.key === "Enter"){
+				information();
+			} 		
+		} 
+
+		var myWeatherData
+		//call openweather api
+		function information(){
+			fetch('https://api.openweathermap.org/data/2.5/weather?q=' +searchInput.value + '&appid=ac7b4a9c67955e6f4a9678a1417616ff')
+			.then(function(response){
+					return response.json()
+				})
+			.then(function(weather){
+				console.log(weather)
+				myWeatherData = weather 
+				reloadPage()
+			})
+		}
+
+			function reloadPage(){
+			document.getElementById("weather").innerHTML = myWeatherData.weather[0].main
+			document.getElementById("desc").innerHTML = myWeatherData.weather[0].description
+			document.getElementById("speed").innerHTML = myWeatherData.wind.speed
+			document.getElementById("pressure").innerHTML = myWeatherData.main.pressure
+			document.getElementById("humidity").innerHTML = myWeatherData.main.humidity
+			document.getElementById("temperature").innerHTML = myWeatherData.main.temp
+		}
+
+</script>
+</body>
+</html>
